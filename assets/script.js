@@ -1,14 +1,21 @@
 // API Key 
-var APIKey = "38dcd24915d0b92b98330133a904b9e1"
+var APIKey = "c01d97f095828b431dc2973dc4fc0324"
 
 //Global variables 
-var city = $('#cityinput').val();
+//var city = $('#cityinput').val(); --- This was not working for some reason so changed to use regular JS
+var city = document.querySelector("#cityinput");
+var button = document.querySelector('.button');
 
-var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + APIKey;
-
-fetch(queryURL)
 
 // Fetch current weather data 
+button.addEventListener('click', function(){
+  console.log("Test");
+  event.preventDefault();
+  var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city.value + "&appid=" + APIKey;
+  fetch(queryURL)
+  .then(response => response.json())
+  .then(data => console.log(data))
+})
 
 
 // Fetch forecast weather data 
@@ -27,7 +34,4 @@ fetch(queryURL)
 
 
 // Clear search history 
-
-
-
 
