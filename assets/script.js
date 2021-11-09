@@ -10,7 +10,16 @@ var windId = document.querySelector('#windId');
 var humidId = document.querySelector('#humidId');
 var uvId = document.querySelector('#uvId');
 
-
+// Todays Date
+var createDate = new Date();
+monthNum = createDate.getMonth();
+month = monthNum.toString();
+dayNum = createDate.getDate();
+day = dayNum.toString();
+yearNum = createDate.getFullYear();
+year = yearNum.toString();
+var today = month + "/" + day + "/" + year;
+document.getElementById("currentDate").innerHTML = today;
 
 // Fetch current weather data 
 button.addEventListener('click', function(){
