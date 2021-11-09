@@ -5,6 +5,7 @@ var APIKey = "c01d97f095828b431dc2973dc4fc0324"
 var button = document.querySelector('.button');
 var cityInput = document.querySelector('#cityInput');
 var cityName = document.querySelector('#cityName');
+var iconId = document.querySelector('#iconId');
 var tempId = document.querySelector('#tempId');
 var windId = document.querySelector('#windId');
 var humidId = document.querySelector('#humidId');
@@ -29,8 +30,29 @@ button.addEventListener('click', function(){
   var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + APIKey;
   fetch(queryURL)
   .then(response => response.json())
-  .then(data => console.log(data))
+  // .then(data => console.log(data))
+  .then(data => {
+    console.log(data)
+    // JSON Data 
+    var nameVal = data.name;
+    var tempVal = Math.floor(data.main.temp);
+    var iconVal = "https://openweathermap.org/img/w/" + data.weather[0].icon + ".png";
+    var humidVal = data.main.humidity;
+    var windVal = Math.floor(data.wind.speed);
+    // Data to HTML
+    cityName.innerHTML = nameVal;
+    $('#iconId').attr('src', iconVal);
+    tempId.innerHTML = tempVal + "F";
+    humidId.innerHTML = humidVal + "%";
+    windId.innerHTML = windVal + "MPH";
+    
+
+  })
 })
+
+
+
+
 
 
 // Fetch forecast weather data 
