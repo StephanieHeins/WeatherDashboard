@@ -47,7 +47,7 @@
              <!-- History -->
                 <div>
                     <ul class="list-group list-group-flush"></ul>
-                    <button type="reset" class="btn btn-primary my-3">Clear</button>
+                    <button type="reset" class="btn btn-primary my-3" id="clear">Clear</button>
                 </div>
             </div>
 
@@ -55,7 +55,7 @@
             <div class="col-8">
 
                 <div class="card border-info mb-3" style="max-width: 200rem;">
-                    <div class="card-header h1" id="cityname">
+                    <div class="card-header h1" id="cityName">
                         Lynnwood 
                         <span id="weathericon"> x </span>
                     </div>
@@ -64,25 +64,25 @@
                         <div class="card" style="max-width: 18rem;">
                             <div class="card-header">Temperature</div>
                             <div class="card-body">
-                              <h5 class="card-title">75 F</h5>
+                              <h5 class="card-title" id="tempId">75 F</h5>
                             </div>
                         </div>
                         <div class="card" style="max-width: 18rem;">
                             <div class="card-header">Wind</div>
                             <div class="card-body">
-                              <h5 class="card-title">75 MPH</h5>
+                              <h5 class="card-title" id="windId">75 MPH</h5>
                             </div>
                         </div>
                         <div class="card" style="max-width: 18rem;">
                             <div class="card-header">Humidity</div>
                             <div class="card-body">
-                              <h5 class="card-title">75%</h5>
+                              <h5 class="card-title" id="humidId">75%</h5>
                             </div>
                         </div>
                         <div class="card" style="max-width: 18rem;">
                             <div class="card-header">UV Index</div>
                             <div class="card-body">
-                              <h5 class="card-title">.075</h5>
+                              <h5 class="card-title" id="uvId">.075</h5>
                             </div>
                         </div>
                     </div>
@@ -92,13 +92,13 @@
                 <div class="h1 py-3">5 Day Forecast</div>
                 <div class="card-deck">
                     <div class="card text-white bg-info mb-3" style="max-width: 12rem;">
-                        <div class="card-header">Date</div>
+                        <div class="card-header" id="date1">Date</div>
                         <div class="card-body">
-                          <h5 class="card-title">Icon</h5>
+                          <h5 class="card-title" id="icon1">Icon</h5>
                           <p class="card-text">Temp:</p>
-                          <p></p>
+                          <p id="temp1"></p>
                           <p class="card-text">Humidity:</p>
-                          <p></p>
+                          <p id="humid1"></p>
                         </div>
                       </div>
                       <div class="card text-white bg-info mb-3" style="max-width: 12rem;">
