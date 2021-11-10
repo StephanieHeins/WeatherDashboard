@@ -30,23 +30,23 @@ button.addEventListener('click', function(){
   var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + APIKey;
   fetch(queryURL)
   .then(response => response.json())
-  // .then(data => console.log(data))
   .then(data => {
     console.log(data)
     saveCity(city);
-    //renderForecast();
     // JSON Data 
     var nameVal = data.name;
     var tempVal = Math.floor(data.main.temp);
     var iconVal = "https://openweathermap.org/img/w/" + data.weather[0].icon + ".png";
     var humidVal = data.main.humidity;
     var windVal = Math.floor(data.wind.speed);
+
     // Data to HTML
     cityName.innerHTML = nameVal;
     $('#iconId').attr('src', iconVal);
     tempId.innerHTML = tempVal + "F";
     humidId.innerHTML = humidVal + "%";
     windId.innerHTML = windVal + "MPH";
+
     // UV Data Fetch 
     let latitude = data.coord.lat;
     let longitude = data.coord.lon;
@@ -70,23 +70,33 @@ button.addEventListener('click', function(){
             } else if (uvVal>=8){
                 $('#uvId').attr("class", "text-danger");
             }
+        })
   })
-})
-})
+  
+    // Fetch forecast data from API: https://openweathermap.org/forecast16
+    let fcQueryURL = "api.openweathermap.org/data/2.5/forecast/daily?q=" + city + "&cnt=5&appid=" + APIKey;
+    fetch(fcQueryURL)
+    .then(response => response.json())
+    .then(data => {
+      console.log(data)
+  
+    })
+    .catch(err => alert("Please enter a valid city name."))
+  })
 
-
+/*
 // Fetch forecast weather data 
 var renderForecast = (event) => {
   let city = $('#cityinput').val();
-  let queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial" + "&APPID=" + APIkey;
-  fetch(queryURL)
+  let fcQueryURL = "api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=" + APIKey;
+  fetch(fcQueryURL)
+  .then(response => response.json())
+  .then(response => {
+    console.log(response)
+
+  })
 }
-
-// Fetch UV Index data 
-
-
-// Search function 
-
+*/
 
 // Save city search in LocalStorage 
 var saveCity = (newCity) => {
