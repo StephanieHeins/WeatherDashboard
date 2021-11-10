@@ -1,5 +1,5 @@
 // API Key 
-var APIKey = "c01d97f095828b431dc2973dc4fc0324"
+const APIKey = "c01d97f095828b431dc2973dc4fc0324"
 
 //Global variables 
 var button = document.querySelector('.button');
@@ -33,6 +33,8 @@ button.addEventListener('click', function(){
   // .then(data => console.log(data))
   .then(data => {
     console.log(data)
+    saveCity(city);
+    //renderForecast();
     // JSON Data 
     var nameVal = data.name;
     var tempVal = Math.floor(data.main.temp);
@@ -45,18 +47,40 @@ button.addEventListener('click', function(){
     tempId.innerHTML = tempVal + "F";
     humidId.innerHTML = humidVal + "%";
     windId.innerHTML = windVal + "MPH";
-    
+    // UV Data Fetch 
+    let latitude = data.coord.lat;
+    let longitude = data.coord.lon;
+    let uvQueryURL = "https://api.openweathermap.org/data/2.5/uvi/forecast?&units=imperial&appid=885e9149105e8901c9809ac018ce8658&q=" +
+    "&lat=" +
+    latitude +
+    "&lon=" +
+    longitude;
 
+    fetch(uvQueryURL)
+    .then(response => response.json())
+        // UV Data to HTML
+        .then((data) => {
+            console.log(data)
+            let uvVal = data[0].value;
+            uvId.innerHTML = uvVal;
+            if (uvVal>=0 && uvVal<3){
+                $('#uvId').attr("class", "text-success");
+            } else if (uvVal>=3 && uvVal<8){
+                $('#uvId').attr("class", "text-wawrning");
+            } else if (uvVal>=8){
+                $('#uvId').attr("class", "text-danger");
+            }
   })
+})
 })
 
 
-
-
-
-
 // Fetch forecast weather data 
-
+var renderForecast = (event) => {
+  let city = $('#cityinput').val();
+  let queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial" + "&APPID=" + APIkey;
+  fetch(queryURL)
+}
 
 // Fetch UV Index data 
 
@@ -65,7 +89,20 @@ button.addEventListener('click', function(){
 
 
 // Save city search in LocalStorage 
-
+var saveCity = (newCity) => {
+  let cityExists = false;
+  // Check if exists 
+  for (let i = 0; i < localStorage.length; i++) {
+      if (localStorage["cities" + i] === newCity) {
+          cityExists = true;
+          break;
+      }
+  }
+  // If new, save to LocalStorage 
+  if (cityExists === false) {
+      localStorage.setItem('cities' + localStorage.length, newCity);
+  }
+}
 
 // Render list of previous searches 
 
