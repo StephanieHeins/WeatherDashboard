@@ -11,6 +11,8 @@ var windId = document.querySelector('#windId');
 var humidId = document.querySelector('#humidId');
 var uvId = document.querySelector('#uvId');
 
+var historyArray = [];
+
 // Todays Date
 var createDate = new Date();
 monthNum = createDate.getMonth();
@@ -33,7 +35,8 @@ button.addEventListener('click', function(){
   .then(response => response.json())
   .then(data => {
     console.log(data)
-    saveCity();
+    saveToHistory()
+
     // JSON Data 
     var nameVal = data.name;
     var tempVal = Math.floor(data.main.temp);
@@ -86,20 +89,30 @@ button.addEventListener('click', function(){
     .catch(err => alert("Please enter a valid city name."))
   })
 
-// City Search History 
-var saveCity = () => {
-  let city = $('#cityinput').val();
-    localStorage.setItem("cities", city);
-   // var history = $("<ul>").addClass("list-group list-group-flush").text(localStorage.getItem("cities"))
-   for (let i = 0; i < localStorage.length; i++) {
-    let cityEl = localStorage.getItem("cities" + i);
-    $("#historylist").prepend(cityEl);
+// Save to History
+function saveToHistory() {
+let city = $('#cityinput').val();
+historyArray.push(city);
+window.localStorage.setItem("searchHistory", JSON.stringify(historyArray));
+renderHistory();
+}
+
+// Render Search History into list 
+function renderHistory() {
+  var historyArray = JSON.parse(localStorage.getItem("searchHistory"));
+  console.table(historyArray);
+  let history = ''
+  for (let i=0; i<historyArray.length; i++) {
+      history += '<ul class="list-group list-group-flush">' + historyArray[i] + '</ul>'
+      document.getElementById("searchHistory").innerHTML = history
 }
 }
 
 // Clear search history 
-$("#clear").on("click", (event) => {
+$("#clearBtn").on("click", (event) => {
   localStorage.clear();
-  saveCity();
+  let clear = "";
+  document.getElementById ("searchHistory").innerHTML = clear;
+  console.log(localStorage);
 })
 
