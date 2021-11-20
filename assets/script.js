@@ -39,7 +39,14 @@ button.addEventListener('click', function(){
 
     // JSON Data 
     var nameVal = data.name;
-    var tempVal = Math.floor(data.main.temp);
+    
+    // Take the temp data returned in Kelvin
+    // Convert temp in K to F 
+    // Round the result 
+    var tempKelv = data.main.temp;
+    var tempCalc = ((tempKelv-273.15)*1.8)+32;
+    var tempVal = Math.floor(tempCalc);
+
     var iconVal = "https://openweathermap.org/img/w/" + data.weather[0].icon + ".png";
     var humidVal = data.main.humidity;
     var windVal = Math.floor(data.wind.speed);
@@ -55,10 +62,7 @@ button.addEventListener('click', function(){
     let latitude = data.coord.lat;
     let longitude = data.coord.lon;
     let uvQueryURL = "https://api.openweathermap.org/data/2.5/uvi/forecast?&units=imperial&appid=885e9149105e8901c9809ac018ce8658&q=" +
-    "&lat=" +
-    latitude +
-    "&lon=" +
-    longitude;
+    "&lat=" + latitude + "&lon=" + longitude;
 
     fetch(uvQueryURL)
     .then(response => response.json())
@@ -77,8 +81,8 @@ button.addEventListener('click', function(){
         })
   })
 
-    // Fetch forecast data from API: https://openweathermap.org/forecast16
-    let fcQueryURL = "api.openweathermap.org/data/2.5/forecast/daily?q=" + city + "&cnt=5&appid=" + APIKey;
+    // Fetch forecast data from API: https://openweathermap.org/forecast5
+    let fcQueryURL = "api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=" + APIKey;
     fetch(fcQueryURL)
     .then(response => response.json())
     .then(data => {
